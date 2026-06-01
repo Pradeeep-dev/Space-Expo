@@ -1,0 +1,730 @@
+/* ================================================================
+   planet.css — Solar System Scroll Journey
+   Designed by Pradeep S
+   ================================================================ */
+
+/* ── DESIGN TOKENS ─────────────────────────────────────────────── */
+:root {
+  /* Colours */
+  --clr-space:        #03040a;
+  --clr-space-mid:    #060c1a;
+  --clr-accent:       #7b61ff;
+  --clr-accent-2:     #00d4ff;
+  --clr-gold:         #ffd166;
+  --clr-text:         #e8eaf6;
+  --clr-text-muted:   #8892b0;
+  --clr-glass-bg:     rgba(255, 255, 255, 0.04);
+  --clr-glass-border: rgba(255, 255, 255, 0.10);
+
+  /* Typography */
+  --font-display: 'Orbitron', monospace;
+  --font-body:    'Exo 2', sans-serif;
+
+  /* Scroll section height — used by JS too (keep in sync with planet.js) */
+  --section-height: 1000px;
+}
+
+/* ── RESET & BASE ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--clr-space);
+  color: var(--clr-text);
+  font-family: var(--font-body);
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* NAVBAR — copy from missions.css to ensure identical appearance */
+.custom-navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0.9rem 1.5rem;
+  background: rgba(3, 4, 10, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.cosmos-logo {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: #fff !important;
+  text-decoration: none;
+}
+.navbar-nav .nav-link {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--clr-text-muted) !important;
+  padding: 0.4rem 1rem !important;
+  transition: color 0.2s;
+}
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active { color: var(--clr-accent-2) !important; }
+.btn-outline-light {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-radius: 50px;
+  padding: 0.4rem 1.4rem;
+  border-color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.7);
+  transition: all 0.25s;
+}
+.btn-outline-light:hover {
+  background: var(--clr-accent);
+  border-color: var(--clr-accent);
+  color: #fff;
+}
+
+/* ── FIXED SPACE BACKGROUND ─────────────────────────────────────── */
+#space-bg {
+  position: fixed;
+  inset: 0;                     /* covers 100vw × 100vh */
+  z-index: -1;
+  overflow: hidden;
+  background: #000;             /* hard fallback if galaxy.jpg doesn't load */
+}
+
+/*
+  Galaxy background on a ::before pseudo-element.
+  CRITICAL: Using ::before keeps the `filter` isolated so it does NOT
+  cascade down to the planet <img> children. If we put filter on #space-bg
+  directly, the planet images would also get darkened.
+*/
+#space-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /*
+    Layered: darkening radial gradients on top of the galaxy photo.
+    Adjust rgba alpha values to control how much of the galaxy shows through.
+  */
+  background-image:
+    /* Top vignette */
+    radial-gradient(ellipse 100% 55% at 50% 0%,
+      rgba(2, 4, 20, 0.88) 0%, transparent 100%),
+    /* Bottom vignette */
+    radial-gradient(ellipse 100% 55% at 50% 100%,
+      rgba(0, 0, 8, 0.92) 0%, transparent 100%),
+    /* Slight centre darkening so planets pop */
+    radial-gradient(ellipse 75% 75% at 50% 50%,
+      rgba(4, 6, 24, 0.50) 0%, transparent 100%),
+    /* The actual galaxy texture */
+    url('Images/galaxy.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  /* Darken + cool-tint the galaxy photo to feel like deep space */
+  filter: brightness(0.42) saturate(1.6) hue-rotate(195deg);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── STAR LAYERS ────────────────────────────────────────────────── */
+/*
+  Three depth layers of stars, created as box-shadows via JS-free CSS.
+  We generate stars with multiple box-shadow values on tiny pseudo-elements.
+*/
+.stars-layer {
+  position: absolute;
+  inset: -50%;
+  border-radius: 50%;
+  animation: twinkle-drift 80s linear infinite;
+  z-index: 1;   /* above the ::before galaxy background */
+  pointer-events: none;
+}
+
+#stars-sm {
+  width: 1px; height: 1px;
+  box-shadow:
+    /* 200 tiny white stars — sampled positions */
+    34px 80px #fff, 150px 200px #fff, 600px 40px #dde,
+    820px 130px #fff, 1200px 350px #ccd, 400px 700px #fff,
+    900px 600px #eee, 200px 500px #fff, 1500px 200px #dde,
+    700px 900px #fff, 1100px 750px #cce, 300px 300px #fff,
+    1400px 500px #fff, 50px 600px #dde, 1800px 100px #fff,
+    500px 150px #fff, 850px 450px #ccd, 250px 800px #fff,
+    1600px 700px #dde, 1050px 350px #fff, 750px 250px #eee,
+    1300px 600px #fff, 450px 400px #dde, 1700px 300px #fff,
+    100px 450px #cce, 650px 550px #fff, 1000px 100px #dde,
+    1900px 800px #fff, 350px 650px #eee, 800px 350px #fff,
+    1250px 150px #dde, 550px 750px #fff, 70px 250px #fff,
+    1450px 650px #ccd, 920px 800px #fff, 180px 350px #dde,
+    1150px 450px #fff, 480px 50px #eee, 1350px 250px #fff,
+    620px 680px #dde, 1650px 400px #fff, 280px 120px #fff,
+    1020px 950px #cce, 730px 180px #fff, 1120px 580px #dde,
+    390px 450px #fff, 1750px 550px #fff, 160px 680px #eee,
+    940px 280px #fff, 1420px 80px #dde, 560px 880px #fff,
+    210px 740px #fff, 1080px 640px #ccd, 670px 480px #fff,
+    1570px 170px #dde, 380px 220px #fff, 1220px 880px #fff,
+    490px 600px #eee, 1480px 430px #dde, 330px 380px #fff,
+    870px 700px #fff, 1380px 760px #cce, 120px 160px #fff,
+    710px 820px #dde, 1640px 250px #fff, 260px 960px #fff,
+    1030px 190px #fff, 590px 330px #dde, 1290px 700px #eee,
+    760px 130px #fff, 1530px 820px #dde, 420px 540px #fff,
+    1190px 420px #fff, 90px 720px #ccd, 630px 100px #fff,
+    1370px 560px #dde, 310px 840px #fff, 980px 400px #fff,
+    1700px 640px #eee, 200px 200px #fff, 1100px 300px #dde,
+    460px 760px #fff, 1260px 140px #fff, 810px 920px #cce,
+    1460px 340px #dde, 540px 220px #fff, 1810px 460px #fff,
+    170px 540px #eee, 870px 80px #fff, 1330px 420px #dde;
+  animation-duration: 120s;
+}
+
+#stars-md {
+  width: 2px; height: 2px;
+  box-shadow:
+    160px 350px #aac, 700px 100px #88f, 1300px 450px #aac,
+    400px 600px #99e, 900px 800px #88f, 200px 750px #aac,
+    1100px 200px #99e, 550px 500px #88f, 1600px 350px #aac,
+    350px 150px #99e, 1050px 600px #88f, 800px 700px #aac,
+    1400px 100px #99e, 650px 850px #88f, 1750px 500px #aac,
+    100px 900px #99e, 1200px 750px #88f, 450px 300px #aac,
+    950px 400px #99e, 1500px 200px #88f, 750px 650px #aac,
+    1850px 150px #99e, 300px 500px #88f, 1050px 850px #aac,
+    600px 200px #99e, 1350px 700px #88f, 850px 100px #aac;
+  animation-duration: 180s;
+  animation-direction: reverse;
+}
+
+#stars-lg {
+  width: 3px; height: 3px;
+  box-shadow:
+    500px 300px rgba(170, 200, 255, 0.9),
+    1200px 600px rgba(200, 180, 255, 0.8),
+    300px 700px rgba(170, 200, 255, 0.7),
+    900px 150px rgba(255, 220, 180, 0.8),
+    1500px 450px rgba(170, 200, 255, 0.9),
+    700px 850px rgba(200, 255, 220, 0.7),
+    1800px 250px rgba(170, 200, 255, 0.8),
+    100px 400px rgba(255, 200, 200, 0.7),
+    1300px 750px rgba(170, 200, 255, 0.9);
+  animation-duration: 240s;
+  box-shadow-filter: blur(1px);
+}
+
+@keyframes twinkle-drift {
+  0%   { transform: rotate(0deg) scale(1); opacity: 0.8; }
+  25%  { opacity: 1; }
+  50%  { transform: rotate(180deg) scale(1.02); opacity: 0.9; }
+  75%  { opacity: 0.85; }
+  100% { transform: rotate(360deg) scale(1); opacity: 0.8; }
+}
+
+/* ── NEBULA BLOBS ───────────────────────────────────────────────── */
+.nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: nebula-pulse 12s ease-in-out infinite;
+  z-index: 1;   /* above the ::before galaxy background */
+}
+
+#nebula-1 {
+  width: 600px; height: 400px;
+  top: 10%; left: -10%;
+  background: radial-gradient(ellipse, rgba(123, 97, 255, 0.12) 0%, transparent 70%);
+  animation-delay: 0s;
+}
+#nebula-2 {
+  width: 700px; height: 500px;
+  top: 40%; right: -15%;
+  background: radial-gradient(ellipse, rgba(0, 212, 255, 0.09) 0%, transparent 70%);
+  animation-delay: 4s;
+}
+#nebula-3 {
+  width: 500px; height: 500px;
+  bottom: 5%; left: 30%;
+  background: radial-gradient(ellipse, rgba(255, 100, 80, 0.07) 0%, transparent 70%);
+  animation-delay: 8s;
+}
+
+@keyframes nebula-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.08); }
+}
+
+/* ── PLANET LAYER ───────────────────────────────────────────── */
+/*
+  z-index stack (low → high):
+    -1  #space-bg (galaxy background + stars)
+    10  #planet-layer (planet images) ← clearly visible
+    20  foreground text, cards, hero
+*/
+#planet-layer {
+  position: fixed;
+  inset: 0;           /* covers full viewport */
+  z-index: 10;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ── PLANET IMAGES ────────────────────────────────────────────── */
+.planet-img {
+  position: fixed;
+  width:  460px;
+  height: 460px;
+  top: 50%;
+  margin-top: -230px;
+  object-fit: contain;
+  opacity: 0;
+  transform: scale(0.05) translateX(0px);
+  transition: opacity 0.12s ease-out, transform 0.12s ease-out;
+  pointer-events: none;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 0 60px rgba(150, 180, 255, 0.25));
+  background: transparent;
+}
+
+/* Keep Jupiter edge clean: no glow/matte artifacts on left-right rim. */
+#planet-4 {
+  filter: none;
+  -webkit-clip-path: circle(47.4% at 50% 50%);
+  clip-path: circle(47.4% at 50% 50%);
+  -webkit-mask-image: radial-gradient(circle at center, #000 94.5%, transparent 96.5%);
+  mask-image: radial-gradient(circle at center, #000 94.5%, transparent 96.5%);
+}
+
+/*
+  Planet PNGs now use real alpha transparency (black background removed in assets).
+  Keep blend modes disabled to preserve original planet colours.
+*/
+
+/*
+  SIDE ANCHORS
+  planet-right → right half of screen  (card is on the LEFT)
+  planet-left  → left  half of screen  (card is on the RIGHT)
+
+  The `left` value is the viewport-relative anchor point.
+  `margin-left` shifts it so the IMAGE CENTRE sits on that anchor.
+  half of 460px = 230px
+
+  Adjust these percentages to nudge planets closer/farther from centre:
+*/
+.planet-img.planet-right {
+  left: 67%;            /* anchor in right half */
+  margin-left: -230px;  /* re-centre image on anchor */
+}
+
+.planet-img.planet-left {
+  left: 33%;            /* anchor in left half */
+  margin-left: -230px;  /* re-centre image on anchor */
+}
+
+/* Slow ambient rotation — purely decorative, removed per planet override if needed */
+@keyframes planet-float {
+  0%, 100% { filter: drop-shadow(0 0 60px rgba(150, 150, 255, 0.25)); }
+  50%       { filter: drop-shadow(0 0 90px rgba(150, 200, 255, 0.40)); }
+}
+
+/* ── HERO SECTION ────────────────────────────────────────────── */
+#hero {
+  position: relative;
+  z-index: 20;   /* above the planet layer (10) */
+}
+
+.hero-tagline {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--clr-accent-2);
+  margin-bottom: 1.5rem;
+  animation: fade-up 1.2s ease both;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 8vw, 6rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: 0.05em;
+  color: #fff;
+  animation: fade-up 1.2s ease 0.2s both;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--clr-accent) 0%, var(--clr-accent-2) 50%, var(--clr-gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  color: var(--clr-text-muted);
+  margin-top: 1rem;
+  letter-spacing: 0.05em;
+  animation: fade-up 1.2s ease 0.4s both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll indicator bouncing arrow */
+.scroll-indicator {
+  margin-top: 3rem;
+  animation: fade-up 1.2s ease 0.7s both;
+}
+
+.scroll-indicator span {
+  display: block;
+  width: 2px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--clr-accent-2), transparent);
+  margin: 0 auto;
+  animation: scroll-bounce 1.8s ease-in-out infinite;
+}
+
+@keyframes scroll-bounce {
+  0%, 100% { transform: scaleY(1); opacity: 1; }
+  50%       { transform: scaleY(0.4); opacity: 0.4; }
+}
+
+/* ── PLANET CONTENT WRAPPER ───────────────────────────────────── */
+.planet-content-wrapper {
+  position: relative;
+  z-index: 20;   /* above the planet layer (10) */
+  padding-bottom: 4rem;
+}
+
+/* ── PLANET SECTIONS ────────────────────────────────────────────── */
+.planet-section {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* ── GLASSMORPHISM CARD ─────────────────────────────────────────── */
+.glass-card {
+  background: var(--clr-glass-bg);
+  border: 1px solid var(--clr-glass-border);
+  border-radius: 20px;
+  padding: 2.5rem 2.2rem;
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle top shimmer line */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* ── PLANET NUMBER ──────────────────────────────────────────────── */
+.planet-number {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.04);
+  position: absolute;
+  top: 1rem; right: 1.5rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  user-select: none;
+}
+
+/* ── PLANET BADGE ───────────────────────────────────────────────── */
+.planet-badge {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.35em 1em;
+  border-radius: 50px;
+  margin-bottom: 0.8rem;
+}
+
+.mercury-badge { background: rgba(180,170,160,0.15); color: #c8b8a8; border: 1px solid rgba(180,170,160,0.3); }
+.venus-badge   { background: rgba(255,200,80,0.12);  color: #ffc850; border: 1px solid rgba(255,200,80,0.3); }
+.earth-badge   { background: rgba(60,160,255,0.12);  color: #3ca0ff; border: 1px solid rgba(60,160,255,0.3); }
+.mars-badge    { background: rgba(230,80,50,0.15);   color: #e65032; border: 1px solid rgba(230,80,50,0.3); }
+.jupiter-badge { background: rgba(200,140,80,0.15);  color: #c88c50; border: 1px solid rgba(200,140,80,0.3); }
+.saturn-badge  { background: rgba(220,190,130,0.12); color: #dcc882; border: 1px solid rgba(220,190,130,0.3); }
+.uranus-badge  { background: rgba(80,220,200,0.12);  color: #50dcc8; border: 1px solid rgba(80,220,200,0.3); }
+.neptune-badge { background: rgba(60,100,255,0.15);  color: #4080ff; border: 1px solid rgba(60,100,255,0.3); }
+
+/* ── PLANET NAME ────────────────────────────────────────────────── */
+.planet-name {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: #fff;
+  margin-bottom: 1.2rem;
+  line-height: 1;
+}
+
+/* ── PLANET STATS GRID ──────────────────────────────────────────── */
+.planet-stats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 0.7rem 0.6rem;
+  text-align: center;
+}
+
+.stat-val {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--clr-accent-2);
+  line-height: 1.2;
+  margin-bottom: 0.3rem;
+}
+
+.stat-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--clr-text-muted);
+}
+
+/* ── PLANET DESCRIPTION ─────────────────────────────────────────── */
+.planet-desc {
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: rgba(232, 234, 246, 0.8);
+  margin-bottom: 1.5rem;
+}
+
+/* ── FUN FACT ────────────────────────────────────────────────────── */
+.planet-fun-fact {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: rgba(123, 97, 255, 0.08);
+  border: 1px solid rgba(123, 97, 255, 0.2);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: rgba(232, 234, 246, 0.75);
+}
+
+.fun-fact-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+/* ── TRAVEL SPACER ──────────────────────────────────────────────── */
+.travel-spacer {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 3rem 1rem;
+  opacity: 0.4;
+}
+
+.travel-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(123,97,255,0.6), transparent);
+}
+
+.travel-label {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--clr-accent);
+  white-space: nowrap;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────────── */
+#site-footer {
+  position: relative;
+  z-index: 20;   /* above the planet layer */
+  padding: 8rem 2rem 5rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* footer starfield shimmer */
+.footer-stars {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 60%, rgba(200,200,255,0.4) 0%, transparent 100%),
+    radial-gradient(2px 2px at 80% 20%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.4) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.footer-content {
+  position: relative;
+}
+
+.solar-system-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1.5rem;
+  animation: spin-slow 20s linear infinite;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.footer-journey {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  color: var(--clr-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.footer-distance {
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: rgba(136, 146, 176, 0.5);
+  margin-bottom: 2rem;
+}
+
+.footer-divider {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--clr-accent), transparent);
+  margin: 0 auto 2rem;
+}
+
+/* CREDIT LINE — large and bold as required */
+.footer-credit {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: var(--clr-text);
+  line-height: 1.2;
+}
+
+.credit-name {
+  background: linear-gradient(135deg, var(--clr-accent) 0%, var(--clr-accent-2) 50%, var(--clr-gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* ── ACTIVE PLANET GLOW (added by JS) ──────────────────────────── */
+.planet-img.is-active {
+  filter: drop-shadow(0 0 80px rgba(150, 180, 255, 0.4));
+  animation: planet-float 6s ease-in-out infinite;
+}
+
+/* ── RESPONSIVE ADJUSTMENTS ─────────────────────────────────────── */
+@media (max-width: 992px) {
+  /*
+    On tablet/mobile the layout stacks vertically.
+    Planet sits at the TOP of the viewport (upper 35%), card sits below.
+    Both sides re-centre to left:50%.
+  */
+  .planet-img.planet-right,
+  .planet-img.planet-left {
+    left: 50%;
+    top: 25%;
+    width:  340px;
+    height: 340px;
+    margin-top:  -170px;
+    margin-left: -170px;
+  }
+
+  /* Card pushes down to lower half so it doesn't overlap the planet */
+  .planet-section {
+    align-items: flex-end !important;
+    padding-bottom: 2.5rem;
+  }
+
+  .glass-card {
+    margin-bottom: 1rem;
+  }
+
+  /* Also centre card columns on tablets */
+  [class*="col-md-5"] {
+    width: 90%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .planet-img.planet-right,
+  .planet-img.planet-left {
+    left: 50%;
+    top: 22%;
+    width:  260px;
+    height: 260px;
+    margin-top:  -130px;
+    margin-left: -130px;
+  }
+
+  .glass-card {
+    padding: 1.8rem 1.4rem;
+  }
+
+  .planet-stats {
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    min-width: calc(33% - 0.5rem);
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .footer-credit {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .planet-img.planet-right,
+  .planet-img.planet-left {
+    width:  200px;
+    height: 200px;
+    margin-top:  -100px;
+    margin-left: -100px;
+  }
+}

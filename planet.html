@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solar System – A Scroll Journey Through Space</title>
+    <meta name="description"
+        content="An immersive scroll-animated journey through all 8 planets of our Solar System. Experience Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune." />
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:ital,wght@0,300;0,400;0,600;1,300&display=swap"
+        rel="stylesheet" />
+
+    <!--custom styles -->
+    <link rel="stylesheet" href="planet.css" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <div class="container-fluid">
+            <a href="index.html" class="navbar-brand cosmos-logo">🌌 COSMOS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="planet.html">Planets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="missions.html">Missions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="astronauts.html">Astronauts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                </ul>
+                <button class="btn btn-outline-light ms-3">Explore Now</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+       FIXED BACKGROUND LAYER
+       Contains the starfield and all 8 planet images.
+       These are manipulated by JS scroll logic.
+       z-index: -1 keeps them behind all content.
+  ============================================================ -->
+    <div id="space-bg">
+
+        <!-- Twinkling star layers (pure CSS animation, no canvas) -->
+        <div class="stars-layer" id="stars-sm"></div>
+        <div class="stars-layer" id="stars-md"></div>
+        <div class="stars-layer" id="stars-lg"></div>
+
+        <!-- Nebula glow blobs for atmosphere -->
+        <div class="nebula" id="nebula-1"></div>
+        <div class="nebula" id="nebula-2"></div>
+        <div class="nebula" id="nebula-3"></div>
+
+        <!--
+      PLANET IMAGES
+      Each .planet-img starts at opacity:0, scale(0.05), centered.
+      The JS will animate: opacity, scale (zoom), and translateX (slide off).
+      data-index matches the planet's sequential order (0-based).
+    -->
+        <!--
+      SIDE CLASSES:
+        planet-right → planet anchored in RIGHT half  (card is on the LEFT)
+        planet-left  → planet anchored in LEFT half   (card is on the RIGHT)
+      Even planets (0,2,4,6): card LEFT  → planet RIGHT
+      Odd  planets (1,3,5,7): card RIGHT → planet LEFT
+    -->
+
+    </div><!-- /#space-bg -->
+
+    <!--
+    PLANET LAYER — separate fixed container at z-index:10
+    WHY: #space-bg has z-index:-1 which places EVERYTHING inside it
+    behind the body background. By moving planet images here, they
+    sit above the background but below the text cards (z-index:20).
+  -->
+    <div id="planet-layer">
+        <img id="planet-0" class="planet-img planet-right" src="Images/mercury.png" alt="Mercury – The Smallest Planet"
+            data-index="0" />
+        <img id="planet-1" class="planet-img planet-left" src="Images/venus.png"
+            alt="Venus – The Hottest Planet" data-index="1" />
+        <img id="planet-2" class="planet-img planet-right" src="Images/earth.png" alt="Earth – Our Home Planet"
+            data-index="2" />
+        <img id="planet-3" class="planet-img planet-left" src="Images/mars.png" alt="Mars – The Red Planet"
+            data-index="3" />
+        <img id="planet-4" class="planet-img planet-right" src="Images/jupiter-final.png" alt="Jupiter – The Giant Planet"
+            data-index="4" />
+        <img id="planet-5" class="planet-img planet-left" src="Images/saturn.png" alt="Saturn – The Ringed Planet"
+            data-index="5" />
+        <img id="planet-6" class="planet-img planet-right" src="Images/uranus.png" alt="Uranus – The Tilted Ice Giant"
+            data-index="6" />
+        <img id="planet-7" class="planet-img planet-left" src="Images/neptune.png" alt="Neptune – The Windy Ice Giant"
+            data-index="7" />
+    </div><!-- /#planet-layer -->
+
+
+    <!-- ============================================================
+       SCROLLABLE FOREGROUND CONTENT
+       Bootstrap container with 8 planet sections.
+       Each section is vh-100 and has a glassmorphism card.
+  ============================================================ -->
+
+    <!-- Hero intro section (before Mercury) -->
+    <section id="hero" class="vh-100 d-flex align-items-center justify-content-center text-center">
+        <div>
+            <p class="hero-tagline">Scroll to begin your journey</p>
+            <h1 class="hero-title">Our <span class="gradient-text">Solar System</span></h1>
+            <p class="hero-sub">Eight worlds. One scroll. Infinite wonder.</p>
+            <div class="scroll-indicator">
+                <span></span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ── PLANET SECTIONS ── -->
+    <div class="container planet-content-wrapper" id="planets-container">
+
+        <!-- ── 1. MERCURY ── card LEFT · planet RIGHT -->
+        <div class="row planet-section vh-100 align-items-center justify-content-start" id="section-mercury"
+            data-planet="0">
+            <div class="col-11 col-md-5 col-lg-4 ms-3 ms-md-4 ms-xl-5">
+                <div class="glass-card">
+                    <div class="planet-number">01</div>
+                    <div class="planet-badge mercury-badge">Terrestrial · Closest to Sun</div>
+                    <h2 class="planet-name">Mercury</h2>
+                    <div class="planet-stats">
+                        <div class="stat"><span class="stat-val">4,879 km</span><span class="stat-label">Diameter</span>
+                        </div>
+                        <div class="stat"><span class="stat-val">88 days</span><span class="stat-label">Orbital
+                                Period</span></div>
+                        <div class="stat"><span class="stat-val">430°C</span><span class="stat-label">Max Temp</span>
+                        </div>
+                    </div>
+                    <p class="planet-desc">
+                        The smallest planet in our solar system and nearest to the Sun, Mercury races
+                        around our star every 88 Earth days. Despite being closest to the Sun, it is not
+                        the hottest — that title belongs to Venus. Its surface is heavily cratered, scarred
+                        by billions of years of cosmic bombardment.
+                    </p>
+                    <div class="planet-fun-fact">
+                        <span class="fun-fact-icon">⚡</span>
+                        <span>A day on Mercury lasts longer than its year — 59 Earth days to rotate once!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Travel spacer -->
+        <div class="travel-spacer" aria-hidden="true">
+            <div class="travel-line"></div>
+            <span class="travel-label">TRAVELLING · 56 MILLION KM</span>
+            <div class="travel-line"></div>
+        </div>
+
+        <!-- ── 2. VENUS ── card RIGHT · planet LEFT -->
+        <div class="row planet-section vh-100 align-items-center justify-content-end" id="section-venus"
+            data-planet="1">
+            <div class="col-11 col-md-5 col-lg-4 me-3 me-md-4 me-xl-5">
+                <div class="glass-card">
+                    <div class="planet-number">02</div>
+                    <div class="planet-badge venus-badge">Terrestrial · Hottest Planet</div>
+                    <h2 class="planet-name">Venus</h2>
+                    <div class="planet-stats">
+                        <div class="stat"><span class="stat-val">12,104 km</span><span
+                                class="stat-label">Diameter</span></div>
+                        <div class="stat"><span class="stat-val">225 days</span><span class="stat-label">Orbital
+                                Period</span></div>
+                        <div class="stat"><span class="stat-val">465°C</span><span class="stat-label">Avg Temp</span>
+                        </div>
+                    </div>
+                    <p class="planet-desc">
+                        Venus is Earth's twisted twin — similar in size and mass, yet utterly alien.
+                        Shrouded in thick clouds of sulphuric acid, it traps heat through a runaway greenhouse
+                        effect, making it the hottest planet. Its surface pressure is 90× that of Earth,
+                        and it rotates backwards relative to most planets.
+                    </p>
+                    <div class="planet-fun-fact">
+                        <span class="fun-fact-icon">🌡️</span>
+                        <span>Venus can melt lead on its surface. It rains sulphuric acid from its clouds.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Travel spacer -->
+        <div class="travel-spacer" aria-hidden="true">
+            <div class="travel-line"></div>
+            <span class="travel-label">TRAVELLING · 41 MILLION KM</span>
+            <div class="travel-line"></div>
+        </div>
+
+        <!-- ── 3. EARTH ── card LEFT · planet RIGHT -->
+        <div class="row planet-section vh-100 align-items-center justify-content-start" id="section-earth"
+            data-planet="2">
+            <div class="col-11 col-md-5 col-lg-4 ms-3 ms-md-4 ms-xl-5">
+                <div class="glass-card">
+                    <div class="planet-number">03</div>
+                    <div class="planet-badge earth-badge">Terrestrial · Our Home</div>
+                    <h2 class="planet-name">Earth</h2>
+                    <div class="planet-stats">
+                        <div class="stat"><span class="stat-val">12,756 km</span><span
+                                class="stat-label">Diameter</span></div>
+                        <div class="stat"><span class="stat-val">365 days</span><span class="stat-label">Orbital
+                                Period</span></div>
+                        <div class="stat"><span class="stat-val">15°C</span><span class="stat-label">Avg Temp</span>
+                        </div>
+                    </div>
+                    <p class="planet-desc">
+                        The pale blue dot. Our home. The only known world in the universe confirmed to
+                        harbour life. Earth's liquid water, protective magnetic field, and nitrogen-oxygen
+                        atmosphere create the perfect cradle for 8.7 million species — and counting.
+                        From space, the oceans give it a brilliant, unmistakable blue glow.
+                    </p>
+                    <div class="planet-fun-fact">
+                        <span class="fun-fact-icon">🌍</span>
+                        <span>Earth is the densest planet in the Solar System. Its core is as hot as the Sun's
+                            surface.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Travel spacer -->
+        <div class="travel-spacer" aria-hidden="true">
+            <div class="travel-line"></div>
+            <span class="travel-label">TRAVELLING · 78 MILLION KM</span>
+            <div class="travel-line"></div>
+        </div>
+
+        <!-- ── 4. MARS ── card RIGHT · planet LEFT -->
+        <div class="row planet-section vh-100 align-items-center justify-content-end" id="section-mars" data-planet="3">
+            <div class="col-11 col-md-5 col-lg-4 me-3 me-md-4 me-xl-5">
+                <div class="glass-card">
+                    <div class="planet-number">04</div>
+                    <div class="planet-badge mars-badge">Terrestrial · The Red Planet</div>
+                    <h2 class="planet-name">Mars</h2>
+                    <div class="planet-stats">
+                        <div class="stat"><span class="stat-val">6,779 km</span><span class="stat-label">Diameter</span>
+                        </div>
+                        <div class="stat"><span class="stat-val">687 days</span><span class="stat-label">Orbital
+                                Period</span></div>
+                        <div class="stat"><span class="stat-val">2</span><span class="stat-label">Moons</span></div>
+                    </div>
+                    <p class="planet-desc">
+                        Mars has captivated humanity for centuries. Its distinctive red hue comes from iron
+                        oxide (rust) covering its surface. Home to Olympus Mons — the tallest volcano in
+                        the Solar System — and Valles Marineris, a canyon stretching 4,000 km. Mars is
+                        humanity's best candidate for future colonisation.
+                    </p>
+                    <div class="planet-fun-fact">
+                        <span class="fun-fact-icon">🚀</span>
+                        <span>Olympus Mons is 21 km high — nearly 3× the height of Mount Everest!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Travel spacer -->
+        <div class="travel-spacer" aria-hidden="true">
+            <div class="travel-line"></div>
+            <span class="travel-label">TRAVELLING · 550 MILLION KM</span>
+            <div class="travel-line"></div>
+        </div>
+
+        <!-- ── 5. JUPITER ── card LEFT · planet RIGHT -->
+        <div class="row planet-section vh-100 align-items-center justify-content-start" id="section-jupiter"
+            data-planet="4">
+            <div class="col-11 col-md-5 col-lg-4 ms-3 ms-md-4 ms-xl-5">
+                <div class="glass-card">
+                    <div class="planet-number">05</div>
+                    <div class="planet-badge jupiter-badge">Gas Giant · The Largest</div>
+                    <h2 class="planet-name">Jupiter</h2>
+                    <div class="planet-stats">
+                        <div class="stat"><span class="stat-val">142,984 km</span><span
+                                class="stat-label">Diameter</span></div>
+                        <div class="stat"><span class="stat-val">12 years</span><span class="stat-label">Orbital
+                                Period</span></div>
+                        <div class="stat"><span class="stat-val">95 moons</span><span class="stat-label">Known
+                                Moons</span></div>
+                    </div>
+                    <p class="planet-desc">
+                        A behemoth of the Solar System — Jupiter is so large that all other planets could
+                        fit inside it. Its Great Red Spot is a storm that has raged for over 350 years,
+                        wider than Earth itself. Jupiter's immense gravity acts as a cosmic shield,
+                        deflecting asteroids and comets away from the inner planets.
+                    </p>
+                    <div class="planet-fun-fact">
+                        <span class="fun-fact-icon">🌀</span>
+                        <span>Jupiter has the shortest day of all planets — it completes one rotation in just 10
+                            hours!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Travel spacer -->
+        <div class="travel-spacer" aria-hidden="true">
+            <div class="travel-line"></div>
+            <span class="travel-label">TRAVELLING · 658 MILLION KM</span>
+            <div class="travel-line"></div>
+        </div>
+
+        <!-- ── 6. SATURN ── card RIGHT · planet LEFT -->
+        <div class="row planet-section vh-100 align-items-center justify-content-end" id="section-saturn"
+            data-planet="5">
+            <div class="col-11 col-md-5 col-lg-4 me-3 me-md-4 me-xl-5">
+                <div class="glass-card">
+                    <div class="planet-number">06</div>
+                    <div class="planet-badge saturn-badge">Gas Giant · Lord of Rings</div>
+                    <h2 class="planet-name">Saturn</h2>
+                    <div class="planet-stats">
+                        <div class="stat"><span class="stat-val">116,460 km</span><span
+                                class="stat-label">Diameter</span></div>
+                        <div class="stat"><span class="stat-val">29 years</span><span class="stat-label">Orbital
+                                Period</span></div>
+                        <div class="stat"><span class="stat-val">146 moons</span><span class="stat-label">Known
+                                Moons</span></div>
+                    </div>
+                    <p class="planet-desc">
+                        The jewel of the Solar System. Saturn's iconic rings are made of billions of chunks
+                        of ice and rock, ranging from tiny grains to pieces as large as houses. Despite its
+                        massive size, Saturn is the least dense planet — it would float on water! Its moon
+                        Titan has liquid methane lakes on its surface.
+                    </p>
+                    <div class="planet-fun-fact">
+                        <span class="fun-fact-icon">💍</span>
+                        <span>Saturn's rings are 270,000 km wide but only about 100 metres thick on average.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Travel spacer -->
+        <div class="travel-spacer" aria-hidden="true">
+            <div class="travel-line"></div>
+            <span class="travel-label">TRAVELLING · 1.6 BILLION KM</span>
+            <div class="travel-line"></div>
+        </div>
+
+        <!-- ── 7. URANUS ── card LEFT · planet RIGHT -->
+        <div class="row planet-section vh-100 align-items-center justify-content-start" id="section-uranus"
+            data-planet="6">
+            <div class="col-11 col-md-5 col-lg-4 ms-3 ms-md-4 ms-xl-5">
+                <div class="glass-card">
+                    <div class="planet-number">07</div>
+                    <div class="planet-badge uranus-badge">Ice Giant · The Tilted One</div>
+                    <h2 class="planet-name">Uranus</h2>
+                    <div class="planet-stats">
+                        <div class="stat"><span class="stat-val">50,724 km</span><span
+                                class="stat-label">Diameter</span></div>
+                        <div class="stat"><span class="stat-val">84 years</span><span class="stat-label">Orbital
+                                Period</span></div>
+                        <div class="stat"><span class="stat-val">-224°C</span><span class="stat-label">Avg Temp</span>
+                        </div>
+                    </div>
+                    <p class="planet-desc">
+                        Uranus orbits the Sun on its side — its axis is tilted at 98°, likely due to a
+                        massive collision early in the Solar System's history. This gives it extreme seasons
+                        where each pole experiences 42 years of continuous sunlight followed by 42 years
+                        of darkness. Its cyan-blue colour comes from methane in its atmosphere.
+                    </p>
+                    <div class="planet-fun-fact">
+                        <span class="fun-fact-icon">🌀</span>
+                        <span>Uranus is the coldest planet despite not being the farthest from the Sun — it has no
+                            internal heat source!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Travel spacer -->
+        <div class="travel-spacer" aria-hidden="true">
+            <div class="travel-line"></div>
+            <span class="travel-label">TRAVELLING · 1 BILLION KM</span>
+            <div class="travel-line"></div>
+        </div>
+
+        <!-- ── 8. NEPTUNE ── card RIGHT · planet LEFT -->
+        <div class="row planet-section vh-100 align-items-center justify-content-end" id="section-neptune"
+            data-planet="7">
+            <div class="col-11 col-md-5 col-lg-4 me-3 me-md-4 me-xl-5">
+                <div class="glass-card">
+                    <div class="planet-number">08</div>
+                    <div class="planet-badge neptune-badge">Ice Giant · The Windiest</div>
+                    <h2 class="planet-name">Neptune</h2>
+                    <div class="planet-stats">
+                        <div class="stat"><span class="stat-val">49,244 km</span><span
+                                class="stat-label">Diameter</span></div>
+                        <div class="stat"><span class="stat-val">165 years</span><span class="stat-label">Orbital
+                                Period</span></div>
+                        <div class="stat"><span class="stat-val">2,100 km/h</span><span class="stat-label">Wind
+                                Speed</span></div>
+                    </div>
+                    <p class="planet-desc">
+                        The most distant planet from the Sun, Neptune is a world of roaring supersonic winds
+                        and swirling storms. Its largest moon Triton orbits in the opposite direction —
+                        a captured Kuiper Belt object. Neptune was the first planet predicted by mathematics
+                        before being directly observed, in 1846.
+                    </p>
+                    <div class="planet-fun-fact">
+                        <span class="fun-fact-icon">🌊</span>
+                        <span>Neptune's winds are the fastest in the Solar System — up to 2,100 km/h, faster than
+                            sound!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /#planets-container -->
+
+
+    <!-- ============================================================
+       FOOTER – Credit Line
+  ============================================================ -->
+    <footer id="site-footer">
+        <div class="footer-stars"></div>
+        <div class="footer-content">
+            <div class="solar-system-icon" aria-hidden="true">☀️</div>
+            <p class="footer-journey">You have reached the edge of our Solar System.</p>
+            <p class="footer-distance">4.5 billion km from where we began.</p>
+            <div class="footer-divider"></div>
+            <p class="footer-credit">Designed by <span class="credit-name">Pradeep S</span></p>
+        </div>
+    </footer>
+
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmBXjQC1WdJLqG7MiEA53P2rLOGI"
+        crossorigin="anonymous"></script>
+
+    <!-- Our custom scroll animation script -->
+    <script src="planet.js"></script>
+
+</body>
+
+</html>

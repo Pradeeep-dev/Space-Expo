@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Missions – Historic Journeys Beyond Earth</title>
+    <meta name="description"
+        content="Explore humanity's greatest space missions — from Apollo 11 to Chandrayaan-3. Landmark missions that changed history." />
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:ital,wght@0,300;0,400;0,600;1,300&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="missions.css" />
+</head>
+
+<body>
+    <!-- ── NAVBAR ── -->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <div class="container-fluid">
+            <a href="index.html" class="navbar-brand cosmos-logo">🌌 COSMOS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="planet.html">Planets</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="missions.html">Missions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="astronauts.html">Astronauts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                </ul>
+                <button class="btn btn-outline-light ms-3">Explore Now</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ── FIXED SPACE BACKGROUND ── -->
+    <div id="space-bg">
+        <div class="stars-layer" id="stars-sm"></div>
+        <div class="stars-layer" id="stars-md"></div>
+        <div class="stars-layer" id="stars-lg"></div>
+        <div class="nebula" id="nebula-1"></div>
+        <div class="nebula" id="nebula-2"></div>
+        <div class="nebula" id="nebula-3"></div>
+    </div>
+
+    <!-- ── HERO ── -->
+    <section id="hero">
+        <p class="hero-tagline">Humanity's greatest achievements</p>
+        <h1 class="hero-title">Space <span class="gradient-text">Missions</span></h1>
+        <p class="hero-sub">Eight landmark missions that changed how we see the universe.</p>
+        <div class="scroll-indicator"><span></span></div>
+    </section>
+
+    <!-- ── MISSIONS GRID ── -->
+    <main id="missions-main">
+        <div class="container">
+
+            <div class="missions-grid">
+
+                <!-- ── CARD 1: APOLLO 11 ── -->
+                <article class="mission-card reveal" id="card-apollo11" data-mission="apollo11" tabindex="0" role="button" aria-label="Open Apollo 11 mission details">
+                    <div class="card-photo-wrap">
+                        <img src="Images/Edwin-Aldrin-Moon-July-20-1969.webp"
+                            alt="Buzz Aldrin walking on the Moon during Apollo 11"
+                            class="card-photo"
+                            loading="lazy" />
+                        <div class="card-photo-overlay"></div>
+                        <span class="card-num">01</span>
+                        <div class="mission-badge apollo-badge">NASA · Crewed Lunar</div>
+                    </div>
+                    <div class="card-body-inner">
+                        <h2 class="mission-name">Apollo 11</h2>
+                        <div class="mission-stats">
+                            <div class="stat"><span class="stat-val">Jul 1969</span><span class="stat-label">Launch</span></div>
+                            <div class="stat"><span class="stat-val">Moon</span><span class="stat-label">Destination</span></div>
+                            <div class="stat"><span class="stat-val">8 days</span><span class="stat-label">Duration</span></div>
+                        </div>
+                        <p class="mission-desc">
+                            "One small step for man, one giant leap for mankind." Apollo 11 made history as the
+                            first crewed mission to land on the Moon. Neil Armstrong and Buzz Aldrin walked the
+                            lunar surface while Michael Collins orbited above.
+                        </p>
+                        <div class="card-footer-row">
+                            <div class="mission-fun-fact">
+                                <span class="fun-fact-icon">👨‍🚀</span>
+                                <span>The guidance computer had less power than a modern pocket calculator.</span>
+                            </div>
+                            <span class="mission-status status-success">✓ Success</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ── CARD 2: VOYAGER 1 ── -->
+                <article class="mission-card reveal" id="card-voyager" data-mission="voyager" tabindex="0" role="button" aria-label="Open Voyager 1 mission details">
+                    <div class="card-photo-wrap">
+                        <div class="card-visual voyager-visual">
+                            <span class="visual-icon">🛸</span>
+                            <div class="visual-rings">
+                                <div class="vring vring-1"></div>
+                                <div class="vring vring-2"></div>
+                                <div class="vring vring-3"></div>
+                            </div>
+                        </div>
+                        <span class="card-num">02</span>
+                        <div class="mission-badge voyager-badge">NASA · Interstellar</div>
+                    </div>
+                    <div class="card-body-inner">
+                        <h2 class="mission-name">Voyager 1</h2>
+                        <div class="mission-stats">
+                            <div class="stat"><span class="stat-val">Sep 1977</span><span class="stat-label">Launch</span></div>
+                            <div class="stat"><span class="stat-val">Interstellar</span><span class="stat-label">Destination</span></div>
+                            <div class="stat"><span class="stat-val">46+ yrs</span><span class="stat-label">Active</span></div>
+                        </div>
+                        <p class="mission-desc">
+                            The farthest human-made object in existence. Voyager 1 crossed into interstellar
+                            space in 2012 and still transmits data from over 24 billion kilometres away —
+                            using just 22.4 watts of power.
+                        </p>
+                        <div class="card-footer-row">
+                            <div class="mission-fun-fact">
+                                <span class="fun-fact-icon">📡</span>
+                                <span>Signals take 22+ hours to reach Earth at the speed of light.</span>
+                            </div>
+                            <span class="mission-status status-active">⬤ Active</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ── CARD 3: HUBBLE ── -->
+                <article class="mission-card reveal" id="card-hubble" data-mission="hubble" tabindex="0" role="button" aria-label="Open Hubble mission details">
+                    <div class="card-photo-wrap">
+                        <div class="card-visual hubble-visual">
+                            <span class="visual-icon">🔭</span>
+                            <div class="visual-stars">
+                                <i></i><i></i><i></i><i></i><i></i>
+                                <i></i><i></i><i></i><i></i><i></i>
+                            </div>
+                        </div>
+                        <span class="card-num">03</span>
+                        <div class="mission-badge hubble-badge">NASA/ESA · Observatory</div>
+                    </div>
+                    <div class="card-body-inner">
+                        <h2 class="mission-name">Hubble</h2>
+                        <div class="mission-stats">
+                            <div class="stat"><span class="stat-val">Apr 1990</span><span class="stat-label">Launch</span></div>
+                            <div class="stat"><span class="stat-val">Low Orbit</span><span class="stat-label">Altitude</span></div>
+                            <div class="stat"><span class="stat-val">35+ yrs</span><span class="stat-label">Active</span></div>
+                        </div>
+                        <p class="mission-desc">
+                            The telescope that changed how we see the universe. Over 1.3 million observations —
+                            including the iconic "Pillars of Creation" and the Ultra Deep Field, revealing
+                            10,000 galaxies in one tiny patch of sky.
+                        </p>
+                        <div class="card-footer-row">
+                            <div class="mission-fun-fact">
+                                <span class="fun-fact-icon">🔭</span>
+                                <span>Orbits Earth every 95 minutes at 27,300 km/h.</span>
+                            </div>
+                            <span class="mission-status status-active">⬤ Active</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ── CARD 4: CASSINI ── -->
+                <article class="mission-card reveal" id="card-cassini" data-mission="cassini" tabindex="0" role="button" aria-label="Open Cassini mission details">
+                    <div class="card-photo-wrap">
+                        <div class="card-visual cassini-visual">
+                            <span class="visual-icon">🪐</span>
+                            <div class="visual-orbit"></div>
+                        </div>
+                        <span class="card-num">04</span>
+                        <div class="mission-badge cassini-badge">NASA/ESA · Saturn Orbiter</div>
+                    </div>
+                    <div class="card-body-inner">
+                        <h2 class="mission-name">Cassini</h2>
+                        <div class="mission-stats">
+                            <div class="stat"><span class="stat-val">Oct 1997</span><span class="stat-label">Launch</span></div>
+                            <div class="stat"><span class="stat-val">Saturn</span><span class="stat-label">Destination</span></div>
+                            <div class="stat"><span class="stat-val">20 years</span><span class="stat-label">Duration</span></div>
+                        </div>
+                        <p class="mission-desc">
+                            Cassini spent 13 years orbiting Saturn, revealing its rings, moons, and storms in
+                            extraordinary detail. The Huygens probe landed on Titan — the first landing in
+                            the outer Solar System. In 2017 it made its dramatic final plunge into Saturn.
+                        </p>
+                        <div class="card-footer-row">
+                            <div class="mission-fun-fact">
+                                <span class="fun-fact-icon">🪐</span>
+                                <span>Discovered that Enceladus sprays liquid water geysers into space.</span>
+                            </div>
+                            <span class="mission-status status-complete">● Complete</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ── CARD 5: JAMES WEBB ── -->
+                <article class="mission-card reveal" id="card-jwst" data-mission="jwst" tabindex="0" role="button" aria-label="Open James Webb mission details">
+                    <div class="card-photo-wrap">
+                        <div class="card-visual jwst-visual">
+                            <span class="visual-icon">🌌</span>
+                            <div class="visual-hexgrid">
+                                <i></i><i></i><i></i><i></i><i></i><i></i>
+                            </div>
+                        </div>
+                        <span class="card-num">05</span>
+                        <div class="mission-badge jwst-badge">NASA/ESA/CSA · Deep Space</div>
+                    </div>
+                    <div class="card-body-inner">
+                        <h2 class="mission-name">James Webb</h2>
+                        <div class="mission-stats">
+                            <div class="stat"><span class="stat-val">Dec 2021</span><span class="stat-label">Launch</span></div>
+                            <div class="stat"><span class="stat-val">L2 Point</span><span class="stat-label">Location</span></div>
+                            <div class="stat"><span class="stat-val">4+ yrs</span><span class="stat-label">Active</span></div>
+                        </div>
+                        <p class="mission-desc">
+                            Hubble's successor. JWST peers through dust clouds to see the first galaxies formed
+                            after the Big Bang — 13.5 billion years ago. Its gold-coated hexagonal mirror spans
+                            6.5 metres and its 2022 images stunned the world.
+                        </p>
+                        <div class="card-footer-row">
+                            <div class="mission-fun-fact">
+                                <span class="fun-fact-icon">🌌</span>
+                                <span>Can detect a bumblebee at the Moon's distance by its heat alone.</span>
+                            </div>
+                            <span class="mission-status status-active">⬤ Active</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ── CARD 6: DART ── -->
+                <article class="mission-card reveal" id="card-dart" data-mission="dart" tabindex="0" role="button" aria-label="Open DART mission details">
+                    <div class="card-photo-wrap">
+                        <div class="card-visual dart-visual">
+                            <span class="visual-icon">☄️</span>
+                            <div class="visual-impact"></div>
+                        </div>
+                        <span class="card-num">06</span>
+                        <div class="mission-badge dart-badge">NASA · Planetary Defence</div>
+                    </div>
+                    <div class="card-body-inner">
+                        <h2 class="mission-name">DART</h2>
+                        <div class="mission-stats">
+                            <div class="stat"><span class="stat-val">Nov 2021</span><span class="stat-label">Launch</span></div>
+                            <div class="stat"><span class="stat-val">Dimorphos</span><span class="stat-label">Target</span></div>
+                            <div class="stat"><span class="stat-val">6.6 km/s</span><span class="stat-label">Impact Speed</span></div>
+                        </div>
+                        <p class="mission-desc">
+                            The world's first planetary defence test. NASA's spacecraft deliberately crashed
+                            into asteroid Dimorphos in September 2022, successfully changing its orbit by
+                            32 minutes — proving humanity can deflect a dangerous asteroid.
+                        </p>
+                        <div class="card-footer-row">
+                            <div class="mission-fun-fact">
+                                <span class="fun-fact-icon">☄️</span>
+                                <span>Impact ejected 1,000 tonnes of rock, creating a 10,000 km debris tail.</span>
+                            </div>
+                            <span class="mission-status status-success">✓ Success</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ── CARD 7: CHANDRAYAAN-3 ── -->
+                <article class="mission-card reveal" id="card-chandrayaan" data-mission="chandrayaan" tabindex="0" role="button" aria-label="Open Chandrayaan-3 mission details">
+                    <div class="card-photo-wrap">
+                        <div class="card-visual chandrayaan-visual">
+                            <span class="visual-icon">🌕</span>
+                            <div class="visual-orbit"></div>
+                        </div>
+                        <span class="card-num">07</span>
+                        <div class="mission-badge isro-badge">ISRO · Lunar Lander</div>
+                    </div>
+                    <div class="card-body-inner">
+                        <h2 class="mission-name">Chandrayaan-3</h2>
+                        <div class="mission-stats">
+                            <div class="stat"><span class="stat-val">Jul 2023</span><span class="stat-label">Launch</span></div>
+                            <div class="stat"><span class="stat-val">South Pole</span><span class="stat-label">Landing Site</span></div>
+                            <div class="stat"><span class="stat-val">40 days</span><span class="stat-label">Journey</span></div>
+                        </div>
+                        <p class="mission-desc">
+                            India's crowning space achievement. On 23 August 2023, Vikram lander touched down
+                            near the lunar south pole — making India the first nation to achieve this. The
+                            Pragyan rover confirmed sulphur and other elements on the surface.
+                        </p>
+                        <div class="card-footer-row">
+                            <div class="mission-fun-fact">
+                                <span class="fun-fact-icon">🇮🇳</span>
+                                <span>India became the 4th country to land on the Moon and 1st at the south pole.</span>
+                            </div>
+                            <span class="mission-status status-success">✓ Success</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ── CARD 8: ADITYA-L1 ── -->
+                <article class="mission-card reveal" id="card-aditya" data-mission="aditya" tabindex="0" role="button" aria-label="Open Aditya-L1 mission details">
+                    <div class="card-photo-wrap">
+                        <div class="card-visual aditya-visual">
+                            <span class="visual-icon">☀️</span>
+                            <div class="visual-corona">
+                                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                            </div>
+                        </div>
+                        <span class="card-num">08</span>
+                        <div class="mission-badge aditya-badge">ISRO · Solar Observatory</div>
+                    </div>
+                    <div class="card-body-inner">
+                        <h2 class="mission-name">Aditya-L1</h2>
+                        <div class="mission-stats">
+                            <div class="stat"><span class="stat-val">Sep 2023</span><span class="stat-label">Launch</span></div>
+                            <div class="stat"><span class="stat-val">Sun-L1</span><span class="stat-label">Destination</span></div>
+                            <div class="stat"><span class="stat-val">5 years</span><span class="stat-label">Mission Life</span></div>
+                        </div>
+                        <p class="mission-desc">
+                            India's first dedicated solar mission. Placed in a halo orbit around the Sun-Earth
+                            Lagrange Point 1, it studies the solar corona, solar winds, and space weather — data
+                            that helps predict geomagnetic storms affecting Earth.
+                        </p>
+                        <div class="card-footer-row">
+                            <div class="mission-fun-fact">
+                                <span class="fun-fact-icon">☀️</span>
+                                <span>Orbits 1.5 million km from Earth — an unobstructed view of the Sun forever.</span>
+                            </div>
+                            <span class="mission-status status-active">⬤ Active</span>
+                        </div>
+                    </div>
+                </article>
+
+            </div><!-- /.missions-grid -->
+        </div>
+    </main>
+
+    <!-- ── ISRO SATELLITE TABLE ── -->
+    <section id="satellite-table-section">
+        <div class="container">
+            <div class="table-section-header reveal">
+                <div class="table-header-badge">ISRO · Complete Record</div>
+                <h2 class="table-section-title">Satellites Launched by <span class="gradient-text">ISRO</span></h2>
+                <p class="table-section-sub">A legacy of 50 years — from Aryabhata in 1975 to the stars beyond.</p>
+            </div>
+
+            <div class="glass-table-wrapper reveal">
+                <table id="sat_table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Satellite</th>
+                            <th>Category</th>
+                            <th>Launch Year</th>
+                            <th>Launch Vehicle</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="row-num">01</td>
+                            <td class="sat-name">Aryabhata</td>
+                            <td><span class="cat-badge cat-science">Scientific</span></td>
+                            <td>1975</td>
+                            <td>SLV-E (Soviet)</td>
+                            <td><span class="status-badge status-decom">Decommissioned</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">02</td>
+                            <td class="sat-name">Bhaskara-I</td>
+                            <td><span class="cat-badge cat-remote">Remote Sensing</span></td>
+                            <td>1979</td>
+                            <td>SLV-E (Soviet)</td>
+                            <td><span class="status-badge status-decom">Decommissioned</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">03</td>
+                            <td class="sat-name">APPLE</td>
+                            <td><span class="cat-badge cat-comm">Communications</span></td>
+                            <td>1981</td>
+                            <td>Ariane-1</td>
+                            <td><span class="status-badge status-decom">Decommissioned</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">04</td>
+                            <td class="sat-name">INSAT-1B</td>
+                            <td><span class="cat-badge cat-comm">Communications</span></td>
+                            <td>1983</td>
+                            <td>Space Shuttle PAM-D</td>
+                            <td><span class="status-badge status-decom">Decommissioned</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">05</td>
+                            <td class="sat-name">IRS-1A</td>
+                            <td><span class="cat-badge cat-remote">Remote Sensing</span></td>
+                            <td>1988</td>
+                            <td>Vostok (Soviet)</td>
+                            <td><span class="status-badge status-decom">Decommissioned</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">06</td>
+                            <td class="sat-name">INSAT-3D</td>
+                            <td><span class="cat-badge cat-meteor">Meteorological</span></td>
+                            <td>2013</td>
+                            <td>Ariane-5</td>
+                            <td><span class="status-badge status-op">Operational</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">07</td>
+                            <td class="sat-name">GSAT-16</td>
+                            <td><span class="cat-badge cat-comm">Communications</span></td>
+                            <td>2014</td>
+                            <td>Ariane-5</td>
+                            <td><span class="status-badge status-op">Operational</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">08</td>
+                            <td class="sat-name">Astrosat</td>
+                            <td><span class="cat-badge cat-science">Scientific</span></td>
+                            <td>2015</td>
+                            <td>PSLV-C30</td>
+                            <td><span class="status-badge status-op">Operational</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">09</td>
+                            <td class="sat-name">Cartosat-2C</td>
+                            <td><span class="cat-badge cat-remote">Remote Sensing</span></td>
+                            <td>2016</td>
+                            <td>PSLV-C34</td>
+                            <td><span class="status-badge status-op">Operational</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">10</td>
+                            <td class="sat-name">NavIC (IRNSS)</td>
+                            <td><span class="cat-badge cat-nav">Navigation</span></td>
+                            <td>2016</td>
+                            <td>PSLV-C33</td>
+                            <td><span class="status-badge status-op">Operational</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">11</td>
+                            <td class="sat-name">GSAT-19</td>
+                            <td><span class="cat-badge cat-comm">Communications</span></td>
+                            <td>2017</td>
+                            <td>GSLV Mk III-D1</td>
+                            <td><span class="status-badge status-op">Operational</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">12</td>
+                            <td class="sat-name">Chandrayaan-2</td>
+                            <td><span class="cat-badge cat-science">Lunar Science</span></td>
+                            <td>2019</td>
+                            <td>GSLV Mk III-M1</td>
+                            <td><span class="status-badge status-op">Orbiter Active</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">13</td>
+                            <td class="sat-name">EOS-01</td>
+                            <td><span class="cat-badge cat-remote">Remote Sensing</span></td>
+                            <td>2020</td>
+                            <td>PSLV-C49</td>
+                            <td><span class="status-badge status-op">Operational</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">14</td>
+                            <td class="sat-name">OneWeb (36 sats)</td>
+                            <td><span class="cat-badge cat-comm">Communications</span></td>
+                            <td>2022</td>
+                            <td>GSLV Mk III</td>
+                            <td><span class="status-badge status-op">Operational</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">15</td>
+                            <td class="sat-name">Aditya-L1</td>
+                            <td><span class="cat-badge cat-science">Solar Science</span></td>
+                            <td>2023</td>
+                            <td>PSLV-C57</td>
+                            <td><span class="status-badge status-op">Operational</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer id="site-footer">
+        <div class="footer-stars"></div>
+        <div class="footer-content">
+            <div class="solar-system-icon" aria-hidden="true">🚀</div>
+            <p class="footer-journey">You have reached the end of the mission log.</p>
+            <p class="footer-distance">From Aryabhata 1975 to Aditya-L1 2023 — 50 years of exploration.</p>
+            <div class="footer-divider"></div>
+            <p class="footer-credit">Designed by <span class="credit-name">Pradeep S</span></p>
+        </div>
+    </footer>
+
+    <!-- ── MISSION DETAIL MODAL ── -->
+    <div id="mission-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+        <div id="modal-backdrop"></div>
+        <div id="modal-panel">
+            <!-- Close button -->
+            <button id="modal-close" aria-label="Close">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <line x1="2" y1="2" x2="20" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="20" y1="2" x2="2" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            </button>
+
+            <!-- Scrollable inner -->
+            <div id="modal-scroll">
+
+                <!-- Visual / photo hero -->
+                <div id="modal-visual-wrap">
+                    <!-- filled by JS: either <img> or .modal-visual-bg -->
+                </div>
+
+                <!-- Header -->
+                <div id="modal-header">
+                    <div id="modal-badge"></div>
+                    <h2 id="modal-title"></h2>
+                    <p id="modal-tagline"></p>
+                </div>
+
+                <!-- Stats bar -->
+                <div id="modal-stats"></div>
+
+                <!-- Body sections -->
+                <div id="modal-body">
+
+                    <div class="modal-section">
+                        <h3 class="modal-section-title">📖 Overview</h3>
+                        <p id="modal-overview"></p>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3 class="modal-section-title">🏆 Key Achievements</h3>
+                        <ul id="modal-achievements"></ul>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3 class="modal-section-title">📅 Mission Timeline</h3>
+                        <div id="modal-timeline"></div>
+                    </div>
+
+                    <div class="modal-section" id="modal-crew-section">
+                        <h3 class="modal-section-title">👨‍🚀 Crew / Team</h3>
+                        <div id="modal-crew"></div>
+                    </div>
+
+                    <div class="modal-fact-box">
+                        <span class="modal-fact-icon">⚡</span>
+                        <div>
+                            <div class="modal-fact-label">Did You Know?</div>
+                            <div id="modal-did-you-know"></div>
+                        </div>
+                    </div>
+
+                </div><!-- /#modal-body -->
+            </div><!-- /#modal-scroll -->
+        </div><!-- /#modal-panel -->
+    </div><!-- /#mission-modal -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmBXjQC1WdJLqG7MiEA53P2rLOGI"
+        crossorigin="anonymous"></script>
+    <script src="missions.js"></script>
+</body>
+
+</html>

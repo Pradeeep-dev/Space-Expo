@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Exploration</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:ital,wght@0,300;0,400;0,600;1,300&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- fixed space background container (matches missions.html) -->
+    
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <div class="container-fluid">
+            <a href="index.html" class="navbar-brand cosmos-logo">🌌 COSMOS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="planet.html">Planets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="missions.html">Missions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="astronauts.html">Astronauts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                </ul>
+                <button class="btn btn-outline-light ms-3">Explore Now</button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="space-background" id="space-bg">
+            <div class="stars-layer" id="stars-sm"></div>
+            <div class="stars-layer" id="stars-md"></div>
+            <div class="stars-layer" id="stars-lg"></div>
+            <!-- Nebula clouds -->
+            <div class="nebula" id="nebula-1"></div>
+            <div class="nebula" id="nebula-2"></div>
+            <div class="nebula" id="nebula-3"></div>
+            
+            <!-- Moon/Secondary Planet -->
+            <div class="moon"></div>
+            
+            <!-- Earth -->
+            <div class="earth-container">
+                <div class="earth">
+                    <div class="earth-atmosphere"></div>
+                    <div class="earth-lights"></div>
+                </div>
+            </div>
+            
+            <!-- Astronaut -->
+            <div class="astronaut-container">
+                <div class="astronaut">
+                    <div class="helmet">
+                        <div class="helmet-visor"></div>
+                        <div class="helmet-reflection"></div>
+                    </div>
+                    <div class="suit">
+                        <div class="suit-details"></div>
+                    </div>
+                    <div class="arms">
+                        <div class="arm arm-left"></div>
+                        <div class="arm arm-right"></div>
+                    </div>
+                    <div class="legs">
+                        <div class="leg leg-left"></div>
+                        <div class="leg leg-right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hero Text -->
+        <div class="hero-text">
+            <div class="hero-subtitle">Welcome to Cosmos</div>
+            <h1 class="hero-title">Explore the <span class="title-highlight">Universe</span></h1>
+            <p class="hero-description">Dive into the mysteries of space, explore distant planets, discover epic missions and meet the heroes of humanity.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary">Explore Now</button>
+                <button class="btn btn-secondary">Learn More</button>
+            </div>
+        </div>
+
+        <div class="news-section">
+            <h1 class="news-title">Featured News</h1>
+                <h2 class="news-sub">NASA's Artemis I Mission Successfully Launches</h2>
+                <p>NASA's Artemis I mission has successfully launched, marking a significant milestone in humanity's return to the Moon. The uncrewed Orion spacecraft is now on its way to orbit the Moon, paving the way for future crewed missions.</p>
+        </div>
+
+        <!-- Hero Text1 -->
+        <div class="hero-text1">
+            <h2 class="hero-title1">Bringing Space Closer To You</h2>
+            <p class="hero-description1">Join us on a journey through the vast expanse of space and time.</p>
+            <div>
+                <p class="hero-description1">Cosmos is not just a normal website to explore — it's a gateway to the wonders of the universe.</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
