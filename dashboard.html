@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mission Control Dashboard – Space Exploration</title>
+    <meta name="description" content="Live space data dashboard — who's in space, ISS tracker, mission stats, and space exploration charts." />
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+
+    <!-- ── NAVBAR ── -->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <div class="container-fluid">
+            <a href="index.html" class="navbar-brand cosmos-logo">🌌 COSMOS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="planet.html">Planets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="missions.html">Missions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="astronauts.html">Astronauts</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ── FIXED SPACE BACKGROUND ── -->
+    <div id="space-bg">
+        <div class="stars-layer" id="stars-sm"></div>
+        <div class="stars-layer" id="stars-md"></div>
+        <div class="stars-layer" id="stars-lg"></div>
+        <div class="nebula" id="nebula-1"></div>
+        <div class="nebula" id="nebula-2"></div>
+        <div class="nebula" id="nebula-3"></div>
+    </div>
+
+    <!-- ── HERO ── -->
+    <section id="hero">
+        <div class="hero-live-dot"><span class="live-dot"></span> LIVE DATA</div>
+        <h1 class="hero-title">Mission <span class="gradient-text">Control</span></h1>
+        <p class="hero-sub">Real-time space data, statistics, and exploration metrics — all in one place.</p>
+        <div id="hero-clock"></div>
+    </section>
+
+    <!-- ── STATS BAR ── -->
+    <section id="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card reveal">
+                    <div class="stat-icon">👨‍🚀</div>
+                    <div class="stat-number" data-target="632" id="stat-astronauts">0</div>
+                    <div class="stat-label">Humans in Space (Total)</div>
+                    <div class="stat-sub">since Yuri Gagarin, 1961</div>
+                </div>
+                <div class="stat-card reveal">
+                    <div class="stat-icon">🚀</div>
+                    <div class="stat-number" data-target="165" id="stat-missions">0</div>
+                    <div class="stat-label">Crewed Missions</div>
+                    <div class="stat-sub">orbital & lunar combined</div>
+                </div>
+                <div class="stat-card reveal">
+                    <div class="stat-icon">🌍</div>
+                    <div class="stat-number" data-target="72" id="stat-countries">0</div>
+                    <div class="stat-label">Countries in Space</div>
+                    <div class="stat-sub">with active space programs</div>
+                </div>
+                <div class="stat-card reveal">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-number" data-target="437" id="stat-record">0</div>
+                    <div class="stat-label">Record Days in Space</div>
+                    <div class="stat-sub">Oleg Kononenko, 2024</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── LIVE DATA ROW ── -->
+    <section id="live-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-eyebrow"><span class="live-dot small"></span> Live Feed</span>
+                <h2 class="section-title">Who's in <span class="gradient-text">Space Right Now</span></h2>
+            </div>
+            <div class="live-grid">
+
+                <!-- Who's in space card -->
+                <div class="dash-card" id="crew-card">
+                    <div class="dash-card-header">
+                        <span class="dash-card-icon">🛰️</span>
+                        <div>
+                            <div class="dash-card-title">Current ISS Crew</div>
+                            <div class="dash-card-sub">Fetching live data...</div>
+                        </div>
+                        <span class="live-badge"><span class="live-dot tiny"></span> Live</span>
+                    </div>
+                    <div id="crew-list">
+                        <div class="loading-spinner">
+                            <div class="spinner"></div>
+                            <span>Connecting to ISS...</span>
+                        </div>
+                    </div>
+                    <div id="crew-total" class="crew-total-bar"></div>
+                </div>
+
+                <!-- ISS Position Tracker -->
+                <div class="dash-card" id="iss-card">
+                    <div class="dash-card-header">
+                        <span class="dash-card-icon">🌐</span>
+                        <div>
+                            <div class="dash-card-title">ISS Position Tracker</div>
+                            <div class="dash-card-sub">Updated every 5 seconds</div>
+                        </div>
+                        <span class="live-badge"><span class="live-dot tiny"></span> Live</span>
+                    </div>
+                    <div id="iss-display">
+                        <div class="iss-orbit-vis">
+                            <div class="orbit-ring"></div>
+                            <div class="orbit-ring r2"></div>
+                            <div class="orbit-ring r3"></div>
+                            <div class="earth-icon">🌍</div>
+                            <div class="iss-icon" id="iss-dot">🛰️</div>
+                        </div>
+                        <div class="iss-stats-grid">
+                            <div class="iss-stat">
+                                <div class="iss-stat-label">Latitude</div>
+                                <div class="iss-stat-val" id="iss-lat">—</div>
+                            </div>
+                            <div class="iss-stat">
+                                <div class="iss-stat-label">Longitude</div>
+                                <div class="iss-stat-val" id="iss-lon">—</div>
+                            </div>
+                            <div class="iss-stat">
+                                <div class="iss-stat-label">Altitude</div>
+                                <div class="iss-stat-val">408 km</div>
+                            </div>
+                            <div class="iss-stat">
+                                <div class="iss-stat-label">Speed</div>
+                                <div class="iss-stat-val">27,600 km/h</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CHARTS ROW ── -->
+    <section id="charts-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-eyebrow">📊 Statistics</span>
+                <h2 class="section-title">Space <span class="gradient-text">By The Numbers</span></h2>
+            </div>
+            <div class="charts-grid">
+
+                <!-- Bar chart: Missions by decade -->
+                <div class="dash-card chart-card">
+                    <div class="dash-card-header">
+                        <span class="dash-card-icon">📈</span>
+                        <div>
+                            <div class="dash-card-title">Crewed Missions by Decade</div>
+                            <div class="dash-card-sub">1960s to 2020s</div>
+                        </div>
+                    </div>
+                    <div class="chart-wrap">
+                        <canvas id="missionsChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Doughnut: Astronauts by country -->
+                <div class="dash-card chart-card">
+                    <div class="dash-card-header">
+                        <span class="dash-card-icon">🌎</span>
+                        <div>
+                            <div class="dash-card-title">Astronauts by Country</div>
+                            <div class="dash-card-sub">all time, as of 2024</div>
+                        </div>
+                    </div>
+                    <div class="chart-wrap donut-wrap">
+                        <canvas id="countryChart"></canvas>
+                    </div>
+                    <div id="country-legend" class="country-legend"></div>
+                </div>
+
+                <!-- Line chart: Launches per year -->
+                <div class="dash-card chart-card wide-chart">
+                    <div class="dash-card-header">
+                        <span class="dash-card-icon">🔭</span>
+                        <div>
+                            <div class="dash-card-title">Space Launches Over Time</div>
+                            <div class="dash-card-sub">Global orbital launches per decade</div>
+                        </div>
+                    </div>
+                    <div class="chart-wrap">
+                        <canvas id="launchChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SPACE MILESTONES ── -->
+    <section id="milestones-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-eyebrow">🏆 History</span>
+                <h2 class="section-title">Key Space <span class="gradient-text">Milestones</span></h2>
+            </div>
+            <div class="milestones-timeline">
+                <div class="milestone reveal"><span class="ms-year">1957</span><div class="ms-dot"></div><div class="ms-content"><strong>Sputnik 1</strong><p>World's first artificial satellite launched by the Soviet Union.</p></div></div>
+                <div class="milestone reveal"><span class="ms-year">1961</span><div class="ms-dot"></div><div class="ms-content"><strong>Yuri Gagarin</strong><p>First human to travel to outer space aboard Vostok 1.</p></div></div>
+                <div class="milestone reveal"><span class="ms-year">1963</span><div class="ms-dot"></div><div class="ms-content"><strong>Valentina Tereshkova</strong><p>First woman in space, orbited Earth 48 times aboard Vostok 6.</p></div></div>
+                <div class="milestone reveal"><span class="ms-year">1969</span><div class="ms-dot"></div><div class="ms-content"><strong>Apollo 11 — Moon Landing</strong><p>Neil Armstrong and Buzz Aldrin became the first humans to walk on the Moon.</p></div></div>
+                <div class="milestone reveal"><span class="ms-year">1984</span><div class="ms-dot"></div><div class="ms-content"><strong>Rakesh Sharma</strong><p>India's first astronaut travelled to Salyut 7 aboard Soyuz T-11.</p></div></div>
+                <div class="milestone reveal"><span class="ms-year">1998</span><div class="ms-dot"></div><div class="ms-content"><strong>ISS Construction Begins</strong><p>International Space Station assembly started with the Zarya module.</p></div></div>
+                <div class="milestone reveal"><span class="ms-year">2003</span><div class="ms-dot ms-memorial"></div><div class="ms-content"><strong>Columbia Disaster</strong><p>Space Shuttle Columbia broke apart on re-entry. Kalpana Chawla among the seven lost.</p></div></div>
+                <div class="milestone reveal"><span class="ms-year">2012</span><div class="ms-dot"></div><div class="ms-content"><strong>Curiosity Rover — Mars</strong><p>NASA's Curiosity rover successfully landed on Mars using the sky crane system.</p></div></div>
+                <div class="milestone reveal"><span class="ms-year">2020</span><div class="ms-dot ms-active"></div><div class="ms-content"><strong>SpaceX Crew Dragon</strong><p>First crewed commercial spaceflight — Demo-2 mission with Behnken &amp; Hurley.</p></div></div>
+                <div class="milestone reveal"><span class="ms-year">2023</span><div class="ms-dot ms-active"></div><div class="ms-content"><strong>Chandrayaan-3</strong><p>India became the first nation to land near the Moon's south pole.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── QUICK LINKS ── -->
+    <section id="quick-links-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-eyebrow">🔗 Navigate</span>
+                <h2 class="section-title">Explore <span class="gradient-text">More</span></h2>
+            </div>
+            <div class="ql-grid">
+                <a href="missions.html" class="ql-card reveal">
+                    <div class="ql-icon">🚀</div>
+                    <h3 class="ql-title">Space Missions</h3>
+                    <p class="ql-desc">Explore Apollo, Voyager, Chandrayaan, JWST and more historic missions.</p>
+                    <span class="ql-arrow">→</span>
+                </a>
+                <a href="astronauts.html" class="ql-card reveal">
+                    <div class="ql-icon">👨‍🚀</div>
+                    <h3 class="ql-title">Astronauts</h3>
+                    <p class="ql-desc">Meet the brave pioneers — from Rakesh Sharma to Sunita Williams.</p>
+                    <span class="ql-arrow">→</span>
+                </a>
+                <a href="planet.html" class="ql-card reveal">
+                    <div class="ql-icon">🪐</div>
+                    <h3 class="ql-title">Planets</h3>
+                    <p class="ql-desc">Journey through our solar system — from Mercury to Neptune.</p>
+                    <span class="ql-arrow">→</span>
+                </a>
+                <a href="index.html" class="ql-card reveal">
+                    <div class="ql-icon">🌌</div>
+                    <h3 class="ql-title">Home Base</h3>
+                    <p class="ql-desc">Return to the main hub and start your cosmic journey over.</p>
+                    <span class="ql-arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer id="site-footer">
+        <div class="footer-stars"></div>
+        <div class="footer-content">
+            <div class="solar-system-icon" aria-hidden="true">🛸</div>
+            <p class="footer-journey">Mission Control — All Systems Operational.</p>
+            <p class="footer-distance">Data sourced from NASA, ESA, ISRO & Open Notify API.</p>
+            <div class="footer-divider"></div>
+            <p class="footer-copy">© 2024 COSMOS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmBXjQC1WdJLqG7MiEA53P2rLOGI"
+        crossorigin="anonymous"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

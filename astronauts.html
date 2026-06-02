@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Astronauts – Pioneers of Space Exploration</title>
+    <meta name="description"
+        content="Meet the brave astronauts who explored the cosmos — from Rakesh Sharma to Kalpana Chawla." />
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:ital,wght@0,300;0,400;0,600;1,300&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="astronauts.css" />
 </head>
 <body>
-    <h1><center>Astronauts</center></h1>
+
+    <!-- ── NAVBAR ── -->
     <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
         <div class="container-fluid">
             <a href="index.html" class="navbar-brand cosmos-logo">🌌 COSMOS</a>
@@ -17,12 +34,422 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="planet.html">Planets</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="missions.html">Missions</a></li>
-                    <li class="nav-item"><a class="nav-link" href="astronauts.html">Astronauts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="missions.html">Missions</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="astronauts.html">Astronauts</a></li>
                     <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
                 </ul>
-                <button class="btn btn-outline-light ms-3">Explore Now</button>
             </div>
         </div>
     </nav>
-    
+
+    <!-- ── FIXED SPACE BACKGROUND ── -->
+    <div id="space-bg">
+        <div class="stars-layer" id="stars-sm"></div>
+        <div class="stars-layer" id="stars-md"></div>
+        <div class="stars-layer" id="stars-lg"></div>
+        <div class="nebula" id="nebula-1"></div>
+        <div class="nebula" id="nebula-2"></div>
+        <div class="nebula" id="nebula-3"></div>
+    </div>
+
+    <!-- ── HERO SECTION ── -->
+    <section id="hero">
+        <p class="hero-tagline">India's Space Legends</p>
+        <h1 class="hero-title">Space <span class="gradient-text">Astronauts</span></h1>
+        <p class="hero-sub">Meet the pioneers who dared to leave Earth and reach for the stars.</p>
+        <div class="scroll-indicator"><span></span></div>
+    </section>
+
+    <!-- ── ASTRONAUT CARDS ── -->
+    <main id="astronauts-main">
+        <div class="container">
+            <div class="card-container">
+
+                <!-- Card 1: Rakesh Sharma -->
+                <div class="astro-card reveal" id="card-rakesh" data-astronaut="rakesh"
+                     tabindex="0" role="button" aria-label="Open Rakesh Sharma details">
+                    <div class="card-img-wrap">
+                        <img src="Images/Rakesh Sharma.jpg" alt="Rakesh Sharma" loading="lazy" />
+                        <div class="card-img-overlay"></div>
+                        <span class="card-num">01</span>
+                        <div class="astro-badge isro-badge">ISRO · Cosmonaut</div>
+                    </div>
+                    <div class="card-body-inner">
+                        <h2 class="astro-name">Rakesh Sharma</h2>
+                        <div class="astro-stats">
+                            <div class="stat"><span class="stat-val">Apr 1984</span><span class="stat-label">Launch</span></div>
+                            <div class="stat"><span class="stat-val">Salyut 7</span><span class="stat-label">Station</span></div>
+                            <div class="stat"><span class="stat-val">7 days</span><span class="stat-label">Duration</span></div>
+                        </div>
+                        <p class="astro-desc">
+                            India's first and only astronaut, who flew aboard Soyuz T-11 in 1984. When PM Indira Gandhi asked
+                            how India looked from space, he replied — "Saare Jahan Se Accha."
+                        </p>
+                        <div class="card-footer-row">
+                            <div class="astro-fun-fact">
+                                <span class="fun-fact-icon">🇮🇳</span>
+                                <span>Conducted yoga experiments in microgravity during his mission.</span>
+                            </div>
+                            <span class="astro-status status-success">✓ Success</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Kalpana Chawla -->
+                <div class="astro-card reveal" id="card-kalpana" data-astronaut="kalpana"
+                     tabindex="0" role="button" aria-label="Open Kalpana Chawla details">
+                    <div class="card-img-wrap">
+                        <img src="Images/Kalpana Chawla.webp" alt="Kalpana Chawla" loading="lazy" />
+                        <div class="card-img-overlay"></div>
+                        <span class="card-num">02</span>
+                        <div class="astro-badge nasa-badge">NASA · Mission Specialist</div>
+                    </div>
+                    <div class="card-body-inner">
+                        <h2 class="astro-name">Kalpana Chawla</h2>
+                        <div class="astro-stats">
+                            <div class="stat"><span class="stat-val">Nov 1997</span><span class="stat-label">First Flight</span></div>
+                            <div class="stat"><span class="stat-val">2 Missions</span><span class="stat-label">Flights</span></div>
+                            <div class="stat"><span class="stat-val">30 days</span><span class="stat-label">In Space</span></div>
+                        </div>
+                        <p class="astro-desc">
+                            The first woman of Indian origin to travel to space. She flew on STS-87 and STS-107.
+                            Tragically lost in the Columbia disaster on February 1, 2003.
+                        </p>
+                        <div class="card-footer-row">
+                            <div class="astro-fun-fact">
+                                <span class="fun-fact-icon">🚀</span>
+                                <span>She said: "The path from dreams to success does exist."</span>
+                            </div>
+                            <span class="astro-status status-memorial">★ Legend</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Satish Dhawan -->
+                <div class="astro-card reveal" id="card-satish" data-astronaut="satish"
+                     tabindex="0" role="button" aria-label="Open Satish Dhawan details">
+                    <div class="card-img-wrap">
+                        <div class="card-visual satish-visual">
+                            <img src="Images/Satish Dhawan.jpg" alt="Satish Dhawan" loading="lazy">
+                        </div>
+                        <div class="card-img-overlay"></div>
+                        <span class="card-num">03</span>
+                        <div class="astro-badge isro-badge">ISRO · Director</div>
+                    </div>
+                    <div class="card-body-inner">
+                        <h2 class="astro-name">Satish Dhawan</h2>
+                        <div class="astro-stats">
+                            <div class="stat"><span class="stat-val">1972–84</span><span class="stat-label">ISRO Chief</span></div>
+                            <div class="stat"><span class="stat-val">SLV-3</span><span class="stat-label">First Rocket</span></div>
+                            <div class="stat"><span class="stat-val">12 yrs</span><span class="stat-label">Leadership</span></div>
+                        </div>
+                        <p class="astro-desc">
+                            Father of Indian space programme. Under his leadership, ISRO successfully launched SLV-3
+                            and India's first remote sensing satellite IRS-1A, transforming India into a space power.
+                        </p>
+                        <div class="card-footer-row">
+                            <div class="astro-fun-fact">
+                                <span class="fun-fact-icon">🔬</span>
+                                <span>ISRO's launch centre at Sriharikota is named after him.</span>
+                            </div>
+                            <span class="astro-status status-complete">● Legacy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Sunita Williams -->
+                <div class="astro-card reveal" id="card-sunita" data-astronaut="sunita"
+                     tabindex="0" role="button" aria-label="Open Sunita Williams details">
+                    <div class="card-img-wrap">
+                        <img src="Images/Sunita Williams.webp" alt="Sunita Williams" loading="lazy" />
+                        <div class="card-img-overlay"></div>
+                        <span class="card-num">04</span>
+                        <div class="astro-badge nasa-badge">NASA · Commander</div>
+                    </div>
+                    <div class="card-body-inner">
+                        <h2 class="astro-name">Sunita Williams</h2>
+                        <div class="astro-stats">
+                            <div class="stat"><span class="stat-val">Dec 2006</span><span class="stat-label">First Flight</span></div>
+                            <div class="stat"><span class="stat-val">3 Missions</span><span class="stat-label">Flights</span></div>
+                            <div class="stat"><span class="stat-val">322+ days</span><span class="stat-label">In Space</span></div>
+                        </div>
+                        <p class="astro-desc">
+                            Indian-American NASA astronaut and former US Navy officer. Has served as ISS Commander
+                            and holds records for total spacewalk time by a woman — over 50 hours outside the station.
+                        </p>
+                        <div class="card-footer-row">
+                            <div class="astro-fun-fact">
+                                <span class="fun-fact-icon">🌍</span>
+                                <span>She ran the Boston Marathon from space — on a treadmill aboard the ISS!</span>
+                            </div>
+                            <span class="astro-status status-active">⬤ Active</span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div><!-- /.card-container -->
+        </div>
+    </main>
+
+    <!-- ── ASTRONAUT TABLE SECTION ── -->
+    <section id="table-section">
+        <div class="container">
+            <div class="table-intro">
+                <span class="table-eyebrow">Hall of Fame</span>
+                <h2 class="table-section-title">Famous <span class="gradient-text">Astronauts</span> of the World</h2>
+                <p class="table-section-sub">A curated list of legendary space explorers who shaped the course of human history.</p>
+            </div>
+
+            <div class="glass-table-wrapper">
+                <table id="astro_table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Astronaut</th>
+                            <th>Nationality</th>
+                            <th>Agency</th>
+                            <th>Notable Mission</th>
+                            <th>Days in Space</th>
+                            <th>First Flight</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="row-num">01</td>
+                            <td class="astro-name-cell">Yuri Gagarin</td>
+                            <td>🇷🇺 Russia</td>
+                            <td><span class="cat-badge cat-soviet">Soviet / Roscosmos</span></td>
+                            <td>Vostok 1</td>
+                            <td>0.07</td>
+                            <td>1961</td>
+                            <td><span class="status-badge status-decom">✦ Legend</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">02</td>
+                            <td class="astro-name-cell">Neil Armstrong</td>
+                            <td>🇺🇸 USA</td>
+                            <td><span class="cat-badge cat-nasa">NASA</span></td>
+                            <td>Apollo 11</td>
+                            <td>8.6</td>
+                            <td>1966</td>
+                            <td><span class="status-badge status-decom">✦ Legend</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">03</td>
+                            <td class="astro-name-cell">Buzz Aldrin</td>
+                            <td>🇺🇸 USA</td>
+                            <td><span class="cat-badge cat-nasa">NASA</span></td>
+                            <td>Apollo 11</td>
+                            <td>12.1</td>
+                            <td>1966</td>
+                            <td><span class="status-badge status-decom">✦ Legend</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">04</td>
+                            <td class="astro-name-cell">Valentina Tereshkova</td>
+                            <td>🇷🇺 Russia</td>
+                            <td><span class="cat-badge cat-soviet">Soviet</span></td>
+                            <td>Vostok 6</td>
+                            <td>2.9</td>
+                            <td>1963</td>
+                            <td><span class="status-badge status-decom">✦ Legend</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">05</td>
+                            <td class="astro-name-cell">Rakesh Sharma</td>
+                            <td>🇮🇳 India</td>
+                            <td><span class="cat-badge cat-isro">ISRO</span></td>
+                            <td>Soyuz T-11</td>
+                            <td>7.9</td>
+                            <td>1984</td>
+                            <td><span class="status-badge status-decom">✦ Legend</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">06</td>
+                            <td class="astro-name-cell">Kalpana Chawla</td>
+                            <td>🇮🇳 India</td>
+                            <td><span class="cat-badge cat-nasa">NASA</span></td>
+                            <td>STS-107 Columbia</td>
+                            <td>30.9</td>
+                            <td>1997</td>
+                            <td><span class="status-badge status-memorial">★ Memorial</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">07</td>
+                            <td class="astro-name-cell">Sally Ride</td>
+                            <td>🇺🇸 USA</td>
+                            <td><span class="cat-badge cat-nasa">NASA</span></td>
+                            <td>STS-7 Challenger</td>
+                            <td>14.4</td>
+                            <td>1983</td>
+                            <td><span class="status-badge status-decom">✦ Legend</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">08</td>
+                            <td class="astro-name-cell">Chris Hadfield</td>
+                            <td>🇨🇦 Canada</td>
+                            <td><span class="cat-badge cat-csa">CSA / NASA</span></td>
+                            <td>ISS Expedition 35</td>
+                            <td>166.8</td>
+                            <td>1995</td>
+                            <td><span class="status-badge status-ret">● Retired</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">09</td>
+                            <td class="astro-name-cell">Sunita Williams</td>
+                            <td>🇺🇸 USA</td>
+                            <td><span class="cat-badge cat-nasa">NASA</span></td>
+                            <td>ISS Expedition 33</td>
+                            <td>322+</td>
+                            <td>2006</td>
+                            <td><span class="status-badge status-active">⬤ Active</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">10</td>
+                            <td class="astro-name-cell">Scott Kelly</td>
+                            <td>🇺🇸 USA</td>
+                            <td><span class="cat-badge cat-nasa">NASA</span></td>
+                            <td>ISS Year in Space</td>
+                            <td>520</td>
+                            <td>1999</td>
+                            <td><span class="status-badge status-ret">● Retired</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">11</td>
+                            <td class="astro-name-cell">Peggy Whitson</td>
+                            <td>🇺🇸 USA</td>
+                            <td><span class="cat-badge cat-nasa">NASA</span></td>
+                            <td>ISS Expedition 16</td>
+                            <td>665</td>
+                            <td>2002</td>
+                            <td><span class="status-badge status-ret">● Retired</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">12</td>
+                            <td class="astro-name-cell">Yang Liwei</td>
+                            <td>🇨🇳 China</td>
+                            <td><span class="cat-badge cat-cnsa">CNSA</span></td>
+                            <td>Shenzhou 5</td>
+                            <td>0.9</td>
+                            <td>2003</td>
+                            <td><span class="status-badge status-ret">● Retired</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">13</td>
+                            <td class="astro-name-cell">Elon Musk's Crew Dragon</td>
+                            <td>🇺🇸 USA</td>
+                            <td><span class="cat-badge cat-spacex">SpaceX</span></td>
+                            <td>Crew Dragon Demo-2</td>
+                            <td>64</td>
+                            <td>2020</td>
+                            <td><span class="status-badge status-active">⬤ Active</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">14</td>
+                            <td class="astro-name-cell">Gennady Padalka</td>
+                            <td>🇷🇺 Russia</td>
+                            <td><span class="cat-badge cat-soviet">Roscosmos</span></td>
+                            <td>ISS Expedition 13</td>
+                            <td>879</td>
+                            <td>1998</td>
+                            <td><span class="status-badge status-ret">● Retired</span></td>
+                        </tr>
+                        <tr>
+                            <td class="row-num">15</td>
+                            <td class="astro-name-cell">Mae C. Jemison</td>
+                            <td>🇺🇸 USA</td>
+                            <td><span class="cat-badge cat-nasa">NASA</span></td>
+                            <td>STS-47 Endeavour</td>
+                            <td>7.9</td>
+                            <td>1992</td>
+                            <td><span class="status-badge status-ret">● Retired</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><!-- /.glass-table-wrapper -->
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer id="site-footer">
+        <div class="footer-stars"></div>
+        <div class="footer-content">
+            <div class="solar-system-icon" aria-hidden="true">👨‍🚀</div>
+            <p class="footer-journey">You have reached the end of the astronaut log.</p>
+            <p class="footer-distance">From Yuri Gagarin 1961 to today — 60+ years of human spaceflight.</p>
+            <p class="footer-copy">© 2024 COSMOS. All rights reserved.</p>
+            <div class="footer-divider"></div>
+            
+        </div>
+    </footer>
+
+
+    <!-- ── ASTRONAUT DETAIL MODAL ── -->
+    <div id="astro-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+        <div id="modal-backdrop"></div>
+        <div id="modal-panel">
+
+            <!-- Close button -->
+            <button id="modal-close" aria-label="Close">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <line x1="2" y1="2" x2="20" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="20" y1="2" x2="2" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            </button>
+
+            <!-- Scrollable content -->
+            <div id="modal-scroll">
+
+                <!-- Visual hero -->
+                <div id="modal-visual-wrap"></div>
+
+                <!-- Header -->
+                <div id="modal-header">
+                    <div id="modal-badge"></div>
+                    <h2 id="modal-title"></h2>
+                    <p id="modal-tagline"></p>
+                </div>
+
+                <!-- Stats bar -->
+                <div id="modal-stats"></div>
+
+                <!-- Body -->
+                <div id="modal-body">
+
+                    <div class="modal-section">
+                        <h3 class="modal-section-title">📖 Biography</h3>
+                        <p id="modal-overview"></p>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3 class="modal-section-title">🏆 Key Achievements</h3>
+                        <ul id="modal-achievements"></ul>
+                    </div>
+
+                    <div class="modal-section">
+                        <h3 class="modal-section-title">📅 Career Timeline</h3>
+                        <div id="modal-timeline"></div>
+                    </div>
+
+                    <div class="modal-fact-box">
+                        <span class="modal-fact-icon">⚡</span>
+                        <div>
+                            <div class="modal-fact-label">Did You Know?</div>
+                            <div id="modal-did-you-know"></div>
+                        </div>
+                    </div>
+
+                </div><!-- /#modal-body -->
+            </div><!-- /#modal-scroll -->
+        </div><!-- /#modal-panel -->
+    </div><!-- /#astro-modal -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmBXjQC1WdJLqG7MiEA53P2rLOGI"
+        crossorigin="anonymous"></script>
+    <script src="astronauts.js"></script>
+</body>
+
+</html>
