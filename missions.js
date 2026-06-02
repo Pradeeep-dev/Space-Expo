@@ -50,6 +50,8 @@ const MISSIONS = {
     name:    'Voyager 1',
     tagline: 'Humanity\'s farthest-travelling spacecraft — still transmitting',
     badge:   { text: 'NASA · Interstellar Probe', cls: 'voyager-badge' },
+    photo:   'Images/voyager.webp',
+    photoAlt: 'Voyager 1 spacecraft',
     visual:  '🛸',
     visualBg: 'radial-gradient(ellipse at center, #0a1a3a 0%, #03040a 100%)',
     stats: [
@@ -86,6 +88,8 @@ const MISSIONS = {
     name:    'Hubble Space Telescope',
     tagline: 'The telescope that revolutionised our view of the universe',
     badge:   { text: 'NASA/ESA · Space Observatory', cls: 'hubble-badge' },
+    photo:   'Images/Hubble.webp',
+    photoAlt: 'Hubble Space Telescope',
     visual:  '🔭',
     visualBg: 'radial-gradient(ellipse at center, #1a0a2e 0%, #03040a 100%)',
     stats: [
@@ -122,6 +126,8 @@ const MISSIONS = {
     name:    'Cassini–Huygens',
     tagline: 'The grand explorer of Saturn\'s realm — 1997 to 2017',
     badge:   { text: 'NASA/ESA/ASI · Saturn Orbiter', cls: 'cassini-badge' },
+    photo:   'Images/Cassini.jpeg',
+    photoAlt: 'Cassini spacecraft orbiting Saturn',
     visual:  '🪐',
     visualBg: 'radial-gradient(ellipse at center, #2a1800 0%, #03040a 100%)',
     stats: [
@@ -158,6 +164,8 @@ const MISSIONS = {
     name:    'James Webb Space Telescope',
     tagline: 'Peering back 13.5 billion years to the dawn of the universe',
     badge:   { text: 'NASA/ESA/CSA · Infrared Observatory', cls: 'jwst-badge' },
+    photo:   'Images/James Webb Space Telescope.jpg',
+    photoAlt: 'James Webb Space Telescope',
     visual:  '🌌',
     visualBg: 'radial-gradient(ellipse at center, #001a2a 0%, #03040a 100%)',
     stats: [
@@ -194,6 +202,8 @@ const MISSIONS = {
     name:    'DART Mission',
     tagline: 'Humanity\'s first planetary defence test — a direct hit',
     badge:   { text: 'NASA · Planetary Defence', cls: 'dart-badge' },
+    photo:   'Images/DART Mission.jpg',
+    photoAlt: 'DART spacecraft impacting asteroid Dimorphos',
     visual:  '☄️',
     visualBg: 'radial-gradient(ellipse at center, #2a0a0a 0%, #03040a 100%)',
     stats: [
@@ -230,6 +240,8 @@ const MISSIONS = {
     name:    'Chandrayaan-3',
     tagline: 'India\'s historic landing at the lunar south pole — August 23, 2023',
     badge:   { text: 'ISRO · Lunar Lander & Rover', cls: 'isro-badge' },
+    photo:   'Images/Chandrayaan-3.cms',
+    photoAlt: 'Chandrayaan-3 Vikram lander on the Moon',
     visual:  '🌕',
     visualBg: 'radial-gradient(ellipse at center, #1a1a00 0%, #03040a 100%)',
     stats: [
@@ -267,6 +279,8 @@ const MISSIONS = {
     name:    'Aditya-L1',
     tagline: 'India\'s first solar observatory — watching the Sun from 1.5 million km away',
     badge:   { text: 'ISRO · Solar Observatory', cls: 'aditya-badge' },
+    photo:   'Images/Aditya-L1.jpeg',
+    photoAlt: 'Aditya-L1 spacecraft',
     visual:  '☀️',
     visualBg: 'radial-gradient(ellipse at center, #2a1500 0%, #03040a 100%)',
     stats: [
@@ -320,6 +334,21 @@ const modalCrew       = document.getElementById('modal-crew');
 const modalCrewSection= document.getElementById('modal-crew-section');
 const modalDidYouKnow = document.getElementById('modal-did-you-know');
 const modalScroll     = document.getElementById('modal-scroll');
+
+function syncMissionCardImages() {
+  document.querySelectorAll('.mission-card[data-mission]').forEach(card => {
+    const d = MISSIONS[card.dataset.mission];
+    if (!d || !d.photo) return;
+
+    const image = card.querySelector('img');
+    if (!image) return;
+
+    image.src = d.photo;
+    image.alt = d.photoAlt || d.name;
+  });
+}
+
+syncMissionCardImages();
 
 /* ── OPEN ─────────────────────────────────────────────────────── */
 function openModal(missionId) {

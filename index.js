@@ -1,28 +1,82 @@
-// Optimized parallax scrolling with requestAnimationFrame
+// ============ SMOOTH SCROLL FOR BUTTONS ============
+document.addEventListener('DOMContentLoaded', function() {
+    // Scroll button functionality
+    const scrollButtons = document.querySelectorAll('.scroll-btn');
+    scrollButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const target = this.getAttribute('data-target');
+            const element = document.getElementById(target);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // Discover button in navbar
+    const discoverBtn = document.querySelector('.btn-cosmic');
+    if (discoverBtn) {
+        discoverBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = this.getAttribute('href');
+            if (target) {
+                const element = document.querySelector(target);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    }
+
+    // Animate stat counters
+    animateCounters();
+});
+
+// ============ COUNTER ANIMATION ============
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number[data-count]');
+    
+    const observerOptions = {
+        threshold: 0.5
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.animated) {
+                entry.target.animated = true;
+                const target = parseInt(entry.target.getAttribute('data-count'));
+                const duration = 2000; // 2 seconds
+                const increment = target / (duration / 16);
+                let current = 0;
+
+                const counter = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        entry.target.textContent = target;
+                        clearInterval(counter);
+                    } else {
+                        entry.target.textContent = Math.floor(current);
+                    }
+                }, 16);
+            }
+        });
+    }, observerOptions);
+
+    counters.forEach(counter => observer.observe(counter));
+}
+
+// ============ PARALLAX EFFECT ============
 let scrollPosition = 0;
 let ticking = false;
 
 function updateParallax() {
-    const heroText = document.querySelector('.hero-text');
-    const newsSection = document.querySelector('.news-section');
-
-    if (heroText) {
-        const opacity = Math.max(0, 1 - (scrollPosition / 800));
-        heroText.style.transform = `translateY(${scrollPosition * 0.2}px)`;
-        heroText.style.opacity = opacity;
-    }
-
-    if (newsSection) {
-        const newsSectionTop = newsSection.offsetTop;
-        const relativeScroll = scrollPosition - newsSectionTop;
-        
-        if (relativeScroll > 0) {
-            const opacity = Math.max(0, 1 - (relativeScroll / 600));
-            newsSection.style.transform = `translateY(${relativeScroll * 0.2}px)`;
-            newsSection.style.opacity = opacity;
+    const heroBanner = document.querySelector('.hero-banner');
+    if (heroBanner) {
+        const heroContent = heroBanner.querySelector('.hero-content');
+        if (heroContent && scrollPosition < window.innerHeight) {
+            heroContent.style.transform = `translateY(${scrollPosition * 0.3}px)`;
+            heroContent.style.opacity = Math.max(0, 1 - (scrollPosition / window.innerHeight * 0.5));
         }
     }
-    
     ticking = false;
 }
 
@@ -34,45 +88,29 @@ window.addEventListener('scroll', function() {
     }
 }, { passive: true });
 
-// Passive scroll listener for better performance
+// ============ NAVBAR ACTIVE STATE ============
+window.addEventListener('scroll', function() {
+    const navLinks = document.querySelectorAll('.cosmos-navbar .nav-link');
+    const sections = document.querySelectorAll('section[id]');
 
-// Scroll to top function
-function scrollToTop(event) {
-    event.preventDefault();
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (scrollPosition >= sectionTop - 200) {
+            current = section.getAttribute('id');
+        }
     });
-}
 
-// Generate stars
-function createStars() {
-    const starfield = document.getElementById('starfield');
-    const starCount = 150;
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').includes(current)) {
+            link.classList.add('active');
+        }
+    });
+});
 
-    for (let i = 0; i < starCount; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        
-        // Random position
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        
-        // Random size between 1-3px
-        const size = Math.random() * 2 + 1;
-        star.style.width = size + 'px';
-        star.style.height = size + 'px';
-        
-        // Random animation delay
-        star.style.animationDelay = Math.random() * 3 + 's';
-        
-        // Random opacity variation
-        star.style.opacity = Math.random() * 0.7 + 0.3;
-        
-        starfield.appendChild(star);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    createStars();
+// ============ SCROLL TO TOP ON LOAD ============
+window.addEventListener('load', function() {
+    window.scrollTo(0, 0);
 });
